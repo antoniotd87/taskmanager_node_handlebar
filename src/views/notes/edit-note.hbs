@@ -1,0 +1,41 @@
+<div class="col-md-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                Editar Actividad
+            </h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/edit-note/{{note._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="mt-3">
+                    <input type="text" name="title" class="form-control" placeholder="Titulo" value="{{note.title}}" required>
+                </div>
+                <div class="mt-3">
+                    <textarea name="description" class="form-control" required>{{note.description}}
+                    </textarea>
+                </div>
+                <div class="mt-3">
+                    <select class="form-select form-select-sm" name="time" aria-label=".form-select-sm example" required>
+                        <option selected>{{note.time}}</option>
+                        <option value="5 minutos">5 minutos</option>
+                        <option value="10 minutos">10 minutos</option>
+                        <option value="20 minutos">20 minutos</option>
+                        <option value="30 minutos">30 minutos</option>
+                        <option value="40 minutos">40 minutos</option>
+                        <option value="50 minutos">50 minutos</option>
+                        <option value="60 minutos">60 minutos</option>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <input type="date" name="calendar" class="form-control" required value="{{note.calendar}}">
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-primary w-100" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
