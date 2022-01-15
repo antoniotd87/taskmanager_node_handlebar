@@ -9,12 +9,8 @@ const { isAuthenticated } = require('../helpers/salida');
 
 
 // mostrar detalles de una actividad
-router.post('/activities/:url', isAuthenticated, async (req, res) => {
-    let note = await Note.findOne({
-        where: {
-            url: req.params.url
-        }
-    })
+router.post('/activity/:url', isAuthenticated, async (req, res) => {
+    let note = await Note.findOne({ url: req.params.url })
 
     const { title } = req.body;
     const errors = [];
@@ -32,7 +28,7 @@ router.post('/activities/:url', isAuthenticated, async (req, res) => {
         const newTask = new Task({ title, status, activityId });
         await newTask.save();
         req.flash('success_msg', 'Tarea Agregada');
-        res.redirect(`/activities/${note.url}`);
+        res.redirect(`/activity/${note.url}`);
     }
 });
 
@@ -47,7 +43,7 @@ router.put('/tasks/check/:id', isAuthenticated, async (req, res) => {
     let message = task.status == false ? 'Tarea Incompleta' : 'Tarea Terminada';
     await task.save()
     req.flash('success_msg', message);
-    res.redirect(`/activities/${note.url}`);
+    res.redirect(`/activity/${note.url}`);
 });
 
 router.delete('/tasks/delete/:id', isAuthenticated, async (req, res) => {
@@ -58,7 +54,7 @@ router.delete('/tasks/delete/:id', isAuthenticated, async (req, res) => {
         }
     })
     req.flash('success_msg', 'Tarea Eliminada!!!');
-    res.redirect(`/activities/${note.url}`);
+    res.redirect(`/activity/${note.url}`);
 });
 
 module.exports = router;

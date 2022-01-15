@@ -10,9 +10,9 @@
                 <!--<p>Duracion: {{time}}</p> -->
                 <p>Fecha inicio: {{calendar_start}}</p>
                 <p>Fecha finish: {{calendar_finish}}</p>
-                <p>Falta </p>
+                <p>Tiempo: {{time}} dias</p>
                 <div class="d-flex justify-content-between">
-                    <a href="/activities/{{url}}" class="btn btn-success btn-sm">Ver Proyecto</i></a>
+                    <a href="/activity/{{url}}" class="btn btn-success btn-sm">Ver Proyecto</i></a>
                     <form action="/activities/delete/{{_id}}?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="btn btn-danger btn-sm" type="submit">
