@@ -48,6 +48,7 @@ app.use((req, res, next) => {
 });
 // Rutas
 app.use(require('./routes/index'));
+app.use(require('./routes/task'));
 app.use(require('./routes/activities'));
 app.use(require('./routes/users'));
 

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const moment = require('moment');;
+const moment = require('moment');
+const shortid = require('shortid')
 
 const Note = require('../models/Activity');
+const Task = require('../models/Task');
 const { isAuthenticated } = require('../helpers/salida');
 
 
@@ -30,6 +32,7 @@ router.post('/activities/new-activity', isAuthenticated, async (req, res) => {
         newNote.user = req.user.id;
         newNote.calendar_start = new Date(newNote.calendar_start).getTime() + 21600000;
         newNote.calendar_finish = new Date(newNote.calendar_finish).getTime() + 21600000;
+        newNote.url = `${title.trim()}-${shortid.generate()}`
         await newNote.save();
         req.flash('success_msg', 'Actividad Agregada');
         res.redirect('/activities');
@@ -39,6 +42,30 @@ router.post('/activities/new-activity', isAuthenticated, async (req, res) => {
 router.get('/activities', isAuthenticated, async (req, res) => {
     const notes = await Note.find({ user: req.user.id }).sort({ date: 'desc' });
     res.render('activity/activities', { notes });
+});
+// mostrar detalles de una actividad
+router.get('/activities/:url', isAuthenticated, async (req, res) => {
+    let note = await Note.findOne({
+        where: {
+            url: req.params.url
+        }
+    })
+
+    const tasks = await Task.find({ activityId: note.id });
+    let total = 0;
+    let completo = 0;
+
+    tasks.forEach(task => {
+        if (task.status) {
+            completo++;
+        }
+        total++;
+    });
+    let porcentaje = (completo / total) * 100;
+    if (total == 0) {
+        porcentaje = 0;
+    }
+    res.render('activity/show-activity', { note, tasks, porcentaje });
 });
 
 router.get('/activities/edit/:id', isAuthenticated, async (req, res) => {

@@ -1,0 +1,64 @@
+<div class="col-md-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                Tareas del Proyecto - {{note.title}}
+            </h3>
+        </div>
+        <div class="card-body">
+            <form action="/activities/{{note.url}}" method="POST">
+                <div class="mt-3">
+                    <input type="text" name="title" class="form-control" placeholder="Agregar Tarea" required>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-primary w-100" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5>Lista de tareas</h5>
+        </div>
+        <div class="card-body">
+            {{#each tasks}}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <p>{{title}}</p>
+                        <div class="d-flex">
+                            <form action="/tasks/check/{{_id}}?_method=PUT" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="url" value="{{note.url}}">
+                                <button class="btn" type="submit">
+                                    {{#if status}}
+                                    <i class="far fa-check-circle completo"></i>
+                                    {{else}}
+                                    <i class="far fa-check-circle"></i>
+                                    {{/if}}
+                                </button>
+                            </form>
+                            <form action="/tasks/delete/{{_id}}?_method=DELETE" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="url" value="{{note.url}}">
+                                <button class="btn" type="submit">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            {{else}}
+            <p>No hay tareas pendientes</p>
+            {{/each}}
+            <h5>Progreso del proyecto</h5>
+            <div class="progress" style="height: 20px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{porcentaje}}%;"
+                    aria-valuenow="{{porcentaje}}" aria-valuemin="0" aria-valuemax="100"> {{porcentaje}}%</div>
+            </div>
+        </div>
+    </div>
+</div>
