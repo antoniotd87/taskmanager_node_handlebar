@@ -31,7 +31,7 @@
                         <div class="d-flex">
                             <form action="/tasks/check/{{_id}}?_method=PUT" method="POST">
                                 <input type="hidden" name="_method" value="PUT">
-                                <input type="hidden" name="url" value="{{note.url}}">
+                                <input type="hidden" name="activityId" value="{{activityId}}">
                                 <button class="btn" type="submit">
                                     {{#if status}}
                                     <i class="far fa-check-circle completo"></i>
@@ -42,7 +42,7 @@
                             </form>
                             <form action="/tasks/delete/{{_id}}?_method=DELETE" method="POST">
                                 <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="url" value="{{note.url}}">
+                                <input type="hidden" name="activityId" value="{{activityId}}">
                                 <button class="btn" type="submit">
                                     <i class="fas fa-trash"></i>
                                 </button>

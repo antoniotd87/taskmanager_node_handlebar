@@ -34,11 +34,7 @@ router.post('/activity/:url', isAuthenticated, async (req, res) => {
 
 router.put('/tasks/check/:id', isAuthenticated, async (req, res) => {
     let task = await Task.findById(req.params.id);
-    let note = await Note.findOne({
-        where: {
-            url: req.body.url
-        }
-    })
+    let note = await Note.findById(req.body.activityId)
     task.status = task.status == false ? true : false;
     let message = task.status == false ? 'Tarea Incompleta' : 'Tarea Terminada';
     await task.save()
@@ -48,11 +44,7 @@ router.put('/tasks/check/:id', isAuthenticated, async (req, res) => {
 
 router.delete('/tasks/delete/:id', isAuthenticated, async (req, res) => {
     await Task.findByIdAndDelete(req.params.id);
-    let note = await Note.findOne({
-        where: {
-            url: req.body.url
-        }
-    })
+    let note = await Note.findById(req.body.activityId)
     req.flash('success_msg', 'Tarea Eliminada!!!');
     res.redirect(`/activity/${note.url}`);
 });
